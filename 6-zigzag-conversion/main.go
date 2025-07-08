@@ -21,18 +21,18 @@ func main() {
 
 func convert(s string, numRows int) string {
 	var b strings.Builder
-	base := numRows * 2 - 2
+	base := numRows*2 - 2
 	if base == 0 {
 		return s
 	}
 	for i := range numRows {
-		diff := (numRows - i) * 2 - 2
+		diff := (numRows-i)*2 - 2
 		if diff == base {
 			diff = 0
 		}
 		for j := i; j < len(s); j += base {
 			b.WriteByte(s[j])
-			if diff > 0 && j + diff < len(s) {
+			if diff > 0 && j+diff < len(s) {
 				b.WriteByte(s[j+diff])
 			}
 
@@ -41,4 +41,3 @@ func convert(s string, numRows int) string {
 	}
 	return b.String()
 }
-
