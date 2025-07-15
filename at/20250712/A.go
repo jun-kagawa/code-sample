@@ -24,7 +24,7 @@ func palindromic(a int) bool {
 	s := strconv.Itoa(a)
 	i := 0
 	j := len(s) - 1
-	for i < j {
+	for i <= j {
 		if s[i] != s[j] {
 			return false
 		}
@@ -34,30 +34,57 @@ func palindromic(a int) bool {
 	return true
 }
 
+func genPalindromic(n int) []int {
+	r := make([]int, 0)
+	ns := strconv.Itoa(n)
+	l := len(ns) + 1
+	for i := 1; i < l; i++ {
+		if i == 1 {
+			for j := 1; j < 10; j++ {
+				r = append(r, j);
+			}
+			continue
+		}
+		isEven := i % 2 == 1
+		d := i / 2
+		if !isEven {
+			d -= 1
+		}
+		start := 1
+		for ii := 0; ii < d; ii++ {
+			start *= 10
+		}
+		for j := start; j < start * 10; j++ {
+			var sb strings.Builder
+			js := strconv.Itoa(j)
+			sb.WriteString(js)
+			start := len(js) - 1
+			if isEven {
+				start -= 1
+			}
+			for k := start; k >= 0; k-- {
+				sb.WriteByte(js[k])
+			}
+			jn, _ := strconv.Atoi(sb.String())
+			if jn <= n {
+				r = append(r, jn)
+			}
+		}
+	}
+	return r
+}
+
 func main() {
 	var a int
 	fmt.Scan(&a)
 	var n int
 	fmt.Scan(&n)
-	ns := strconv.Itoa(n)
-	d := len(ns) / 2
-	if len(ns)%2 == 1 {
-		d += 1
-	}
-	da, _ := strconv.Atoi(ns[0 : d+1])
-	var total int
-	for i := 1 * (d - 1); i < da; i++ {
-		var sb strings.Builder
-		is := strconv.Itoa(i)
-		sb.WriteString(is)
-		for j := len(is) - 1; j >= 0; j-- {
-			sb.WriteByte(is[j])
-		}
-		num, _ := strconv.Atoi(sb.String())
-		fmt.Println("i", i, "num", num)
-
-		if palindromic(convert(a, num)) {
-			total += i
+	total := 0
+	r := genPalindromic(n)
+	for _, rr := range r {
+		cc := convert(a, rr)
+		if palindromic(cc) {
+			total += rr
 		}
 	}
 	fmt.Println(total)
