@@ -27,3 +27,4 @@ class TestMaxProfit < Minitest::Test
     assert_equal 0, max_profit([7,6,4,3,1])
   end
 end
+
