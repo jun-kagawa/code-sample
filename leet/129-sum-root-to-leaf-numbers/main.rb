@@ -10,34 +10,6 @@ class TreeNode
   end
 end
 
-def sum_numbers(root)
-  return if root.nil?
-  if root.left.nil? && root.right.nil?
-    return root.val
-  end
-  l = back(root.left, root.val.to_s)
-  r = back(root.right, root.val.to_s)
-  l = l.nil? ? 0 : l
-  r = r.nil? ? 0 : r
-  l + r
-end
-
-def back(node, str)
-  if node.nil?
-    return
-  end
-  str += node.val.to_s
-  if node.left.nil? && node.right.nil?
-    return str.to_i
-  end
-  l = back(node.left, str)
-  r = back(node.right, str)
-  str = str[...-1]
-  l = l.nil? ? 0 : l
-  r = r.nil? ? 0 : r
-  l + r
-end
-
 # @param {TreeNode} root
 # @return {Integer}
 def sum_numbers(root)
